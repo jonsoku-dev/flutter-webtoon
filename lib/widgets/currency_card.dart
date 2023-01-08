@@ -5,6 +5,7 @@ class CurrencyCard extends StatelessWidget {
   final String currency;
   final String value;
   final IconData icon;
+  final int rank;
   final bool isInverted;
 
   final _blackColor = const Color(0xFF1F2123);
@@ -16,7 +17,56 @@ class CurrencyCard extends StatelessWidget {
     required this.value,
     required this.icon,
     required this.isInverted,
+    this.rank = 0,
   });
+
+  @override
+  Widget build(BuildContext context) {
+    if (rank == 0) {
+      return InnerChild(
+        isInverted: isInverted,
+        blackColor: _blackColor,
+        name: name,
+        value: value,
+        currency: currency,
+        icon: icon,
+      );
+    }
+    return Transform.translate(
+      offset: Offset(
+        0, // X
+        ((rank - 1) * -1 * 20), // Y
+      ),
+      child: InnerChild(
+        isInverted: isInverted,
+        blackColor: _blackColor,
+        name: name,
+        value: value,
+        currency: currency,
+        icon: icon,
+      ),
+    );
+  }
+}
+
+class InnerChild extends StatelessWidget {
+  const InnerChild({
+    Key? key,
+    required this.isInverted,
+    required Color blackColor,
+    required this.name,
+    required this.value,
+    required this.currency,
+    required this.icon,
+  })  : _blackColor = blackColor,
+        super(key: key);
+
+  final bool isInverted;
+  final Color _blackColor;
+  final String name;
+  final String value;
+  final String currency;
+  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +114,9 @@ class CurrencyCard extends StatelessWidget {
                     Text(
                       currency,
                       style: TextStyle(
-                        color: Colors.white.withOpacity(0.8),
+                        color: isInverted
+                            ? _blackColor.withOpacity(0.8)
+                            : Colors.white.withOpacity(0.8),
                         fontSize: 14,
                       ),
                     ),
