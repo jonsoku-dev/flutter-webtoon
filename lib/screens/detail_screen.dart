@@ -76,7 +76,55 @@ class _DetailScreenState extends State<DetailScreen> {
                 ),
               )
             ],
-          )
+          ),
+          const SizedBox(
+            height: 25,
+          ),
+          FutureBuilder(
+            future: webtoon,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 50,
+                  ),
+                  child: Column(
+                    children: [
+                      Text(
+                        snapshot.data!.about,
+                        style: const TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 14,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            snapshot.data!.genre,
+                            style: const TextStyle(
+                              fontSize: 16,
+                            ),
+                          ),
+                          Text(
+                            snapshot.data!.age,
+                            style: const TextStyle(
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                );
+              }
+              return const Center(
+                child: Text('...'),
+              );
+            },
+          ),
         ],
       ),
     );
