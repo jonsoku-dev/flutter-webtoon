@@ -4,6 +4,10 @@
 
 <https://pub.dev/packages/http>
 
+```bash
+flutter pub add http
+```
+
 ### 사용 방식
 
 ```dart
